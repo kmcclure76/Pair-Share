@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leading with Expert Authority - Conference Activity</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .timer-section {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .timer {
+            font-size: 3em;
+            font-weight: 700;
+            color: #667eea;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .timer.warning {
+            color: #f59e0b;
+        }
+
+        .timer.danger {
+            color: #ef4444;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .timer-label {
+            font-size: 0.9em;
+            color: #6b7280;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .timer-controls {
+            margin-top: 15px;
+        }
+
+        .timer-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            cursor: pointer;
+            margin: 0 5px;
+            transition: all 0.3s;
+        }
+
+        .timer-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .timer-btn.reset {
+            background: #6b7280;
+        }
+
+        .timer-btn.reset:hover {
+            background: #4b5563;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .phase-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            gap: 10px;
+        }
+
+        .phase-dot {
+            flex: 1;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .phase-dot.active {
+            background: #667eea;
+        }
+
+        .phase-dot.complete {
+            background: #10b981;
+        }
+
+        .phase-title {
+            font-size: 2em;
+            color: #1f2937;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .instruction-box {
+            background: #f3f4f6;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .instruction-box h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .instruction-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .instruction-box li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .instruction-box li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .scenario-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 2px solid #f59e0b;
+        }
+
+        .scenario-box h3 {
+            color: #92400e;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .scenario-challenge {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #f59e0b;
+            margin: 15px 0;
+            font-style: italic;
+            font-size: 1.1em;
+            color: #1f2937;
+        }
+
+        .coaching-tips {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #10b981;
+        }
+
+        .coaching-tips h3 {
+            color: #065f46;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .tip-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .tip-avoid {
+            color: #dc2626;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .tip-instead {
+            color: #059669;
+            font-weight: 600;
+        }
+
+        .debrief-questions {
+            background: #ede9fe;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .debrief-questions h3 {
+            color: #5b21b6;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .debrief-questions ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .debrief-questions li {
+            padding: 12px 0;
+            padding-left: 35px;
+            position: relative;
+            line-height: 1.6;
+            font-size: 1.05em;
+        }
+
+        .debrief-questions li:before {
+            content: "💡";
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        .nav-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-btn:disabled {
+            background: #d1d5db;
+            cursor: not-allowed;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #fef3c7 0%, #fde68a 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .phase-content {
+            display: none;
+        }
+
+        .phase-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Leading with Expert Authority</h1>
+            <p>Positioning Yourself as the Learning Strategist</p>
+        </div>
+
+        <div class="timer-section">
+            <div class="timer" id="timer">0:00</div>
+            <div class="timer-label">Time Remaining</div>
+            <div class="timer-controls">
+                <button class="timer-btn" id="startBtn" onclick="startTimer()">Start</button>
+                <button class="timer-btn" id="pauseBtn" onclick="pauseTimer()" style="display:none;">Pause</button>
+                <button class="timer-btn reset" onclick="resetTimer()">Reset</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="phase-indicator">
+                <div class="phase-dot" id="dot0"></div>
+                <div class="phase-dot" id="dot1"></div>
+                <div class="phase-dot" id="dot2"></div>
+                <div class="phase-dot" id="dot3"></div>
+            </div>
+
+            <!-- Phase 0: Instructions -->
+            <div class="phase-content active" id="phase0">
+                <h2 class="phase-title">📋 Activity Instructions</h2>
+                
+                <div class="instruction-box">
+                    <h3>Welcome! Here's What We'll Do (10 minutes total)</h3>
+                    <ul>
+                        <li><strong>Phase 1 (2 min):</strong> Read instructions and understand the activity format</li>
+                        <li><strong>Phase 2 (3 min):</strong> Practice responding to Scenario 1 with confident expert language</li>
+                        <li><strong>Phase 3 (3 min):</strong> Practice responding to Scenario 2 with strategic authority</li>
+                        <li><strong>Phase 4 (2 min):</strong> Reflect on what language shifts helped you sound more confident</li>
+                    </ul>
+                </div>
+
+                <div class="instruction-box">
+                    <h3>Your Role</h3>
+                    <ul>
+                        <li>You are the <span class="highlight">Instructional Design Expert</span> who has been hired to solve learning problems</li>
+                        <li>Your job is to <strong>lead</strong> with recommendations, not facilitate options</li>
+                        <li>Use evidence-based language: "Based on learning science..." or "My recommendation is..."</li>
+                        <li>Position yourself as the architect; AI and stakeholders are resources, not decision-makers</li>
+                    </ul>
+                </div>
+
+                <div class="instruction-box">
+                    <h3>How to Practice</h3>
+                    <ul>
+                        <li>Read each scenario carefully</li>
+                        <li>Think about or write down how you would respond with confident expert authority</li>
+                        <li>Review the coaching tips to refine your language</li>
+                        <li>Focus on asserting expertise without dismissing stakeholder enthusiasm</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Phase 1: Scenario 1 -->
+            <div class="phase-content" id="phase1">
+                <h2 class="phase-title">💼 Scenario 1: The AI-Generated Course</h2>
+                
+                <div class="scenario-box">
+                    <h3>The Situation</h3>
+                    <p>You're in a project kickoff meeting for a new compliance training program. Your SME is excited about AI and says:</p>
+                    <div class="scenario-challenge">
+                        "I used ChatGPT over the weekend and it created an entire compliance course in 10 minutes! I have all the slides ready. Can you just put this into our LMS and add some graphics? We could launch next week!"
+                    </div>
+                    <p><strong>Your Challenge:</strong> Respond in a way that positions you as the expert learning strategist, redirects the conversation, and maintains authority over the instructional solution—without dismissing their enthusiasm.</p>
+                </div>
+
+                <div class="instruction-box">
+                    <h3>Practice Your Response</h3>
+                    <ul>
+                        <li>How will you acknowledge their initiative while asserting your expert role?</li>
+                        <li>What specific language will you use to redirect the solution?</li>
+                        <li>How will you frame your process and timeline with authority?</li>
+                    </ul>
+                </div>
+
+                <div class="coaching-tips">
+                    <h3>💡 Coaching Tips: Expert Language</h3>
+                    <div class="tip-item">
+                        <div class="tip-avoid">❌ Avoid: "Let me look at what you have and see what we can use..."</div>
+                        <div class="tip-instead">✅ Instead: "I appreciate your initiative! Let me share how we'll approach this to ensure it meets compliance standards and drives actual behavior change..."</div>
+                    </div>
+                    <div class="tip-item">
+                        <div class="tip-avoid">❌ Avoid: "We could use the AI content, or we could design something custom. Which would you prefer?"</div>
+                        <div class="tip-instead">✅ Instead: "Based on the learning objectives and compliance requirements, here's the approach I'm recommending..."</div>
+                    </div>
+                    <div class="tip-item">
+                        <div class="tip-avoid">❌ Avoid: "If you want, we could..."</div>
+                        <div class="tip-instead">✅ Instead: "Here's what we need to do to meet both regulatory requirements and learning outcomes..."</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 2: Scenario 2 -->
+            <div class="phase-content" id="phase2">
+                <h2 class="phase-title">🚀 Scenario 2: The Rush to Market</h2>
+                
+                <div class="scenario-box">
+                    <h3>The Situation</h3>
+                    <p>Your stakeholder has been researching AI tools and wants to move quickly. They say:</p>
+                    <div class="scenario-challenge">
+                        "I've been reading about how AI can create training in hours instead of weeks. Our competitors are moving fast with AI-generated content. Why can't we just use AI to build this leadership program quickly? Do we really need the full instructional design process?"
+                    </div>
+                    <p><strong>Your Challenge:</strong> Defend your ID process and timeline while acknowledging the value of speed. Position yourself as the strategic partner who delivers both speed AND quality through expert AI integration.</p>
+                </div>
+
+                <div class="instruction-box">
+                    <h3>Practice Your Response</h3>
+                    <ul>
+                        <li>How will you position your process as enabling speed, not hindering it?</li>
+                        <li>What evidence will you use to justify your approach?</li>
+                        <li>How will you demonstrate that you understand AI's value while maintaining your expert authority?</li>
+                    </ul>
+                </div>
+
+                <div class="coaching-tips">
+                    <h3>💡 Coaching Tips: Strategic Authority</h3>
+                    <div class="tip-item">
+                        <div class="tip-avoid">❌ Avoid: "Well, we need to follow best practices..."</div>
+                        <div class="tip-instead">✅ Instead: "I can absolutely deliver faster using AI—under my direction. Here's how we'll leverage AI while maintaining quality: [specific process]..."</div>
+                    </div>
+                    <div class="tip-item">
+                        <div class="tip-avoid">❌ Avoid: "AI-generated content usually needs a lot of work..."</div>
+                        <div class="tip-instead">✅ Instead: "My implementation strategy uses AI to accelerate prototyping and iteration, with my expert review at key stages to ensure effectiveness. This cuts our timeline in half without sacrificing outcomes..."</div>
+                    </div>
+                    <div class="tip-item">
+                        <div class="tip-avoid">❌ Avoid: "I'm not sure AI is ready for this kind of project..."</div>
+                        <div class="tip-instead">✅ Instead: "Based on learning science and this program's objectives, here's my strategic framework for when and how we'll use AI, and where my expertise is critical for success..."</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 3: Debrief -->
+            <div class="phase-content" id="phase3">
+                <h2 class="phase-title">🎓 Reflection & Debrief</h2>
+                
+                <div class="debrief-questions">
+                    <h3>Reflect on Your Practice</h3>
+                    <ul>
+                        <li>What language shifts helped you sound more confident and authoritative?</li>
+                        <li>What felt uncomfortable about asserting your expertise? Why?</li>
+                        <li>How did reframing from "facilitator" to "expert strategist" change your approach?</li>
+                        <li>What's one specific phrase you'll use in your next stakeholder meeting?</li>
+                    </ul>
+                </div>
+
+                <div class="instruction-box">
+                    <h3>Key Takeaways to Remember</h3>
+                    <ul>
+                        <li><strong>You are the expert</strong> they hired to solve learning problems—own that authority</li>
+                        <li><strong>Present recommendations, not options</strong>—use evidence to back up your decisions</li>
+                        <li><strong>AI accelerates your work, it doesn't replace your judgment</strong>—you're the architect</li>
+                        <li><strong>Confidence comes from expertise</strong>—you know learning science; use it to lead</li>
+                    </ul>
+                </div>
+
+                <div class="scenario-box">
+                    <h3>🌟 Your Next Step</h3>
+                    <p>Before your next stakeholder meeting, write down three confident expert phrases you'll use to establish your authority. Practice them out loud. Remember: your expertise is valuable, and asserting it serves the learning outcomes.</p>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <button class="nav-btn" id="prevBtn" onclick="previousPhase()" disabled>← Previous</button>
+                <button class="nav-btn" id="nextBtn" onclick="nextPhase()">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPhase = 0;
+        const totalPhases = 4;
+        const phaseDurations = [120, 180, 180, 120]; // in seconds: 2, 3, 3, 2 minutes
+        let timeRemaining = phaseDurations[0];
+        let timerInterval = null;
+        let isRunning = false;
+
+        function updatePhaseDisplay() {
+            // Hide all phases
+            for (let i = 0; i < totalPhases; i++) {
+                document.getElementById(`phase${i}`).classList.remove('active');
+                const dot = document.getElementById(`dot${i}`);
+                dot.classList.remove('active', 'complete');
+                if (i < currentPhase) {
+                    dot.classList.add('complete');
+                } else if (i === currentPhase) {
+                    dot.classList.add('active');
+                }
+            }
+            
+            // Show current phase
+            document.getElementById(`phase${currentPhase}`).classList.add('active');
+            
+            // Update buttons
+            document.getElementById('prevBtn').disabled = currentPhase === 0;
+            document.getElementById('nextBtn').disabled = currentPhase === totalPhases - 1;
+            document.getElementById('nextBtn').textContent = currentPhase === totalPhases - 1 ? 'Complete' : 'Next →';
+            
+            // Reset timer for new phase
+            if (!isRunning) {
+                timeRemaining = phaseDurations[currentPhase];
+                updateTimerDisplay();
+            }
+            
+            // Scroll to top of page
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            const display = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            const timerElement = document.getElementById('timer');
+            timerElement.textContent = display;
+            
+            // Update timer color based on time remaining
+            timerElement.classList.remove('warning', 'danger');
+            if (timeRemaining <= 30 && timeRemaining > 10) {
+                timerElement.classList.add('warning');
+            } else if (timeRemaining <= 10) {
+                timerElement.classList.add('danger');
+            }
+        }
+
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+                document.getElementById('startBtn').style.display = 'none';
+                document.getElementById('pauseBtn').style.display = 'inline-block';
+                
+                timerInterval = setInterval(() => {
+                    if (timeRemaining > 0) {
+                        timeRemaining--;
+                        updateTimerDisplay();
+                    } else {
+                        // Auto-advance to next phase when timer runs out
+                        if (currentPhase < totalPhases - 1) {
+                            nextPhase();
+                        } else {
+                            pauseTimer();
+                        }
+                    }
+                }, 1000);
+            }
+        }
+
+        function pauseTimer() {
+            isRunning = false;
+            clearInterval(timerInterval);
+            document.getElementById('startBtn').style.display = 'inline-block';
+            document.getElementById('pauseBtn').style.display = 'none';
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            timeRemaining = phaseDurations[currentPhase];
+            updateTimerDisplay();
+        }
+
+        function nextPhase() {
+            if (currentPhase < totalPhases - 1) {
+                currentPhase++;
+                pauseTimer();
+                timeRemaining = phaseDurations[currentPhase];
+                updatePhaseDisplay();
+                startTimer(); // Auto-start timer for next phase
+            }
+        }
+
+        function previousPhase() {
+            if (currentPhase > 0) {
+                currentPhase--;
+                pauseTimer();
+                timeRemaining = phaseDurations[currentPhase];
+                updatePhaseDisplay();
+                startTimer(); // Auto-start timer when going back
+            }
+        }
+
+        // Initialize
+        updatePhaseDisplay();
+        startTimer(); // Auto-start timer on page load
+    </script>
+</body>
+</html>
